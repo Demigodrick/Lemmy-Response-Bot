@@ -1,0 +1,11 @@
+.Python
+/venv/
+.venv/
+venv/
+.vscode/
+__pycache__/
+database.sqlite
+.python-version
+**.env
+save.file
+*.db
