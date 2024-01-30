@@ -9,3 +9,4 @@ database.sqlite
 **.env
 save.file
 *.db
+notes.txt
