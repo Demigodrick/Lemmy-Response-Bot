@@ -57,7 +57,7 @@ def connect_to_log_db():
 
 
 def check_comments():
-    recent_comments = lemmy.comment.list(limit=25, sort=SortType.New, type_=ListingType.All)
+    recent_comments = lemmy.comment.list(limit=25, sort=SortType.New, type_=ListingType.All, max_depth=1)
     
     regex_pattern = re.compile(settings.TRIGGER, re.IGNORECASE)
     
@@ -78,7 +78,7 @@ def check_comments():
                 
             
             #check community exclusions
-            if check_community_exclusions == "excluded":
+            if check_community_exclusions(community_id) == "excluded":
                 continue
             
             if check_log_db(comment_id) == "duplicate":
@@ -94,7 +94,7 @@ def check_comments():
         
 def check_community_exclusions(community_id):
     try:
-        with connect_to_log_db as conn:
+        with connect_to_log_db() as conn:
             query = '''SELECT community_id FROM exclusions WHERE community_id=?'''
             community_check = execute_sql_query(conn, query, (community_id,))
             

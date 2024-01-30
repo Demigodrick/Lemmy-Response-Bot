@@ -8,7 +8,7 @@ class Settings(BaseSettings):
     TRIGGER: str
     RESPONSES: str
     INCLUDE: str
-    
+
     class Config:
         env_file = ".env"
         

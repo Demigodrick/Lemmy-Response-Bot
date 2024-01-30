@@ -11,7 +11,7 @@ If you're using docker, you can set the environment variables via docker when ru
 
 Responses can be set via a `;` seperated list, i.e. `response 1;response 2` and so on. You can set this in the .env file if running from the code, or you use `-e RESPONSES: 'response 1;response 2 etc`. Honestly, I'm open to all better docker-suitable ideas here.
 
-You can run this mode in "exclude" mode or in "include" mode. In Exclude mode, the bot will scan all of the instance's new comments for the matching trigger word, and community moderators can choose to opt-out by sending the bot a message in the format `#exclude community@instance.tld`. In Include mode, the bot can be locked down to a single community. While it will still scan all the new comments, it will only repsond if the comments are in the matching community. The default is Exclude mode, but you can set the environment variable INCLUDE='community@instance.tld' in the env file or add `-e INCLUDE='community@instance.tld'` in the docker command.
+You can run this bot in "exclude" mode or in "include" mode. In Exclude mode, the bot will scan all of the instance's new comments for the matching trigger word, and community moderators can choose to opt-out by sending the bot a message in the format `#exclude community@instance.tld`. In Include mode, the bot can be locked down to a single community. While it will still scan all the new comments, it will only repsond if the comments are in the matching community. The default is Exclude mode, but you can set the environment variable INCLUDE='community@instance.tld' in the env file or add `-e INCLUDE='community@instance.tld'` in the docker command.
 
 | Environment Variable    | Info |
 | -------- | ------- |
@@ -20,7 +20,7 @@ You can run this mode in "exclude" mode or in "include" mode. In Exclude mode, t
 | INSTANCE    | Your Lemmy instance's url without the https:// bit, i.e. `lemmy.zip`    |
 | TRIGGER   | The trigger word this bot will look for   |
 | RESPONSES | The responses in a `;` seperated list your bot will randomly choose from. |
-| INCLUDE   | Leave blank for your bot to work over all communities. Set to `community@instance.tld` if you want to lock the bot down to a single instance. |
+| INCLUDE   | Leave blank for your bot to work over all communities. Set to `community@instance.tld` if you want to lock the bot down to a single community. |
 
 
 
