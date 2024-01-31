@@ -6,7 +6,7 @@ import time
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
 
 logging.info("Hello! Bot starting...")
-logging.info("Bot Version 0.0.2")
+logging.info("Bot Version 0.0.3")
 
 if __name__ == "__main__":
     
@@ -15,8 +15,8 @@ if __name__ == "__main__":
     check_dbs()
     
 
-    #seconds
-    schedule.every(5).seconds.do(check_comments)
+    #variable 
+    schedule.every(settings.POLL_FREQ).seconds.do(check_comments)
     
     #minutes
     schedule.every(1).minute.do(check_pms)

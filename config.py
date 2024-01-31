@@ -8,6 +8,8 @@ class Settings(BaseSettings):
     TRIGGER: str
     RESPONSES: str
     INCLUDE: str
+    POLL_AMOUNT:int
+    POLL_FREQ:int
 
     class Config:
         env_file = ".env"

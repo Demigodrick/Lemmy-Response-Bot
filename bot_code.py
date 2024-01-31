@@ -57,7 +57,7 @@ def connect_to_log_db():
 
 
 def check_comments():
-    recent_comments = lemmy.comment.list(limit=25, sort=SortType.New, type_=ListingType.All, max_depth=1)
+    recent_comments = lemmy.comment.list(limit=settings.POLL_AMOUNT, sort=SortType.New, type_=ListingType.All, max_depth=1)
     
     regex_pattern = re.compile(settings.TRIGGER, re.IGNORECASE)
     

@@ -13,14 +13,18 @@ Responses can be set via a `;` seperated list, i.e. `response 1;response 2` and 
 
 You can run this bot in "exclude" mode or in "include" mode. In Exclude mode, the bot will scan all of the instance's new comments for the matching trigger word, and community moderators can choose to opt-out by sending the bot a message in the format `#exclude community@instance.tld`. In Include mode, the bot can be locked down to a single community. While it will still scan all the new comments, it will only repsond if the comments are in the matching community. The default is Exclude mode, but you can set the environment variable INCLUDE='community@instance.tld' in the env file or add `-e INCLUDE='community@instance.tld'` in the docker command.
 
-| Environment Variable    | Info |
-| -------- | ------- |
-| USERNAME  | Your bot's username    |
-| PASSWORD | Your bot's password     |
-| INSTANCE    | Your Lemmy instance's url without the https:// bit, i.e. `lemmy.zip`    |
-| TRIGGER   | The trigger word this bot will look for   |
-| RESPONSES | The responses in a `;` seperated list your bot will randomly choose from. |
-| INCLUDE   | Leave blank for your bot to work over all communities. Set to `community@instance.tld` if you want to lock the bot down to a single community. |
+The bot will, by default, scan the newest 25 posts every 5 seconds. This should be enough to capture all the newest comments being generated across Lemmy at this point in time, however you can increase or decrease this as you see fit. If putting in Include mode, then set to a more realistic amount to cover that community, i.e. 10 comments every 60 seconds etc. This will depend on how busy that community is!
+
+| Environment Variable    | Info | Docker env variable |
+| -------- | ------- | ------- |
+| USERNAME  | Your bot's username    |  -e USERNAME='username' |
+| PASSWORD | Your bot's password     |  -e PASSWORD='password' |
+| INSTANCE    | Your Lemmy instance's url without the https:// bit, i.e. `lemmy.zip`    |   -e INSTANCE='instance.tld' |
+| TRIGGER   | The trigger word this bot will look for   | -e TRIGGER='trigger_word' |
+| RESPONSES | The responses in a `;` seperated list your bot will randomly choose from. | -e RESPONSES='Response 1;Response 2;Response 3' |
+| INCLUDE   | Leave blank for your bot to work over all communities. Set to `community@instance.tld` if you want to lock the bot down to a single community. | -e INCLUDE='community@instance.tld' |
+| POLL_AMOUNT   | How many posts the bot will look at for the trigger word. | -e POLL_AMOUNT=25 |
+| POLL_FREQ | How often (in seconds) the bot will scan the newest comments. | -e POLL_FREQ=5 |
 
 
 
