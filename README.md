@@ -9,7 +9,7 @@ If you've downloaded the code and are running the python file directly, you can 
 
 If you're using docker, you can set the environment variables via docker when running the bot, i.e. `-e TRIGGER='BOT' -e RESPONSE='I AM A BOT'`, or in the compose file. The trigger word is not case sensitive.
 
-Responses can be set via a `;` seperated list, i.e. `response 1;response 2` and so on. You can set this in the .env file if running from the code, or you use `-e RESPONSES: 'response 1;response 2 etc`. Honestly, I'm open to all better docker-suitable ideas here.
+Responses can be set via a `;` seperated list, i.e. `response 1;response 2` and so on. You can set this in the .env file if running from the code, or you use `-e RESPONSES: 'response 1;response 2 etc`. (Honestly, I'm open to all better docker-suitable ideas here.) You can use `{username}` in your response to personalise the response to the name of the poster, i.e. `Hello {username}, I am a bot.`
 
 You can run this bot in "exclude" mode or in "include" mode. In Exclude mode, the bot will scan all of the instance's new comments for the matching trigger word, and community moderators can choose to opt-out by sending the bot a message in the format `#exclude community@instance.tld`. In Include mode, the bot can be locked down to a single community. While it will still scan all the new comments, it will only repsond if the comments are in the matching community. The default is Exclude mode, but you can set the environment variable INCLUDE='community@instance.tld' in the env file or add `-e INCLUDE='community@instance.tld'` in the docker command.
 

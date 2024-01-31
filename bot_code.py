@@ -67,6 +67,7 @@ def check_comments():
         comment_text = comment['comment']['content']
         comment_poster = comment['comment']['creator_id']
         community_id = comment['post']['community_id']
+        username = comment['creator']['name']
         
         # scan all comments
         if re.search(regex_pattern,comment_text):
@@ -75,7 +76,6 @@ def check_comments():
             if settings.INCLUDE:
                 if community_id != include_com:
                     continue
-                
             
             #check community exclusions
             if check_community_exclusions(community_id) == "excluded":
@@ -86,7 +86,7 @@ def check_comments():
             
             #get random response from bot:
             bot_responses = settings.RESPONSES.split(';')
-            random_response = random.choice(bot_responses)
+            random_response = random.choice(bot_responses).format(username=username)
             
             lemmy.comment.create(post_id=post_id,content=random_response,parent_id=comment_id)
             add_comment_to_db(comment_id, comment_poster)
