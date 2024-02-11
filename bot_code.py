@@ -57,9 +57,19 @@ def connect_to_log_db():
 
 
 def check_comments():
-    recent_comments = lemmy.comment.list(limit=settings.POLL_AMOUNT, sort=SortType.New, type_=ListingType.All, max_depth=1)
     
-    regex_pattern = re.compile(settings.TRIGGER, re.IGNORECASE)
+    triggers_responses = {
+        settings.TRIGGER_1: settings.RESPONSES_1,
+        settings.TRIGGER_2: settings.RESPONSES_2,
+        settings.TRIGGER_3: settings.RESPONSES_3,
+    }
+    
+    # Clean up the dictionary to remove empty triggers
+    triggers_responses = {k: v for k, v in triggers_responses.items() if k and v}
+    
+    fetchtype = ListingType.All if settings.REACH == "GLOBAL" else ListingType.Local   
+    
+    recent_comments = lemmy.comment.list(max_depth=1, limit=settings.POLL_AMOUNT, sort=SortType.New, type_=fetchtype)  
     
     for comment in recent_comments:
         comment_id = comment['comment']['id']
@@ -69,28 +79,24 @@ def check_comments():
         community_id = comment['post']['community_id']
         username = comment['creator']['name']
         
-        # scan all comments
-        if re.search(regex_pattern,comment_text):
-            
-            #check mode
-            if settings.INCLUDE:
-                if community_id != include_com:
+        for trigger, response_template in triggers_responses.items():
+            regex_pattern = re.compile(trigger, re.IGNORECASE)
+            if re.search(regex_pattern, comment_text):
+                
+                if settings.INCLUDE and community_id != include_com:
                     continue
+                if check_community_exclusions(community_id) == "excluded":
+                    continue
+                if check_log_db(comment_id) == "duplicate":
+                    continue
+                
+                random_response = random.choice(response_template.split(';')).format(username=username)
+                lemmy.comment.create(post_id=post_id, content=random_response, parent_id=comment_id)
+                if settings.CREATE_REPORT:
+                    lemmy.comment.report(comment_id, reason=f"Matched trigger word {trigger} in comment.")
+                add_comment_to_db(comment_id, comment_poster)
+                break
             
-            #check community exclusions
-            if check_community_exclusions(community_id) == "excluded":
-                continue
-            
-            if check_log_db(comment_id) == "duplicate":
-                continue
-            
-            #get random response from bot:
-            bot_responses = settings.RESPONSES.split(';')
-            random_response = random.choice(bot_responses).format(username=username)
-            
-            lemmy.comment.create(post_id=post_id,content=random_response,parent_id=comment_id)
-            add_comment_to_db(comment_id, comment_poster)
-            continue
         
 def check_community_exclusions(community_id):
     try:

@@ -20,12 +20,17 @@ The bot will, by default, scan the newest 25 posts every 5 seconds. This should 
 | USERNAME  | Your bot's username    |  -e USERNAME='username' |
 | PASSWORD | Your bot's password     |  -e PASSWORD='password' |
 | INSTANCE    | Your Lemmy instance's url without the https:// bit, i.e. `lemmy.zip`    |   -e INSTANCE='instance.tld' |
-| TRIGGER   | The trigger word this bot will look for   | -e TRIGGER='trigger_word' |
-| RESPONSES | The responses in a `;` seperated list your bot will randomly choose from. | -e RESPONSES='Response 1;Response 2;Response 3' |
+| TRIGGER_1   | The trigger word this bot will look for   | -e TRIGGER_1='trigger_word' |
+| RESPONSES_1 | The responses in a `;` seperated list your bot will randomly choose from. | -e RESPONSES_1='Response 1;Response 2;Response 3' |
+| TRIGGER_2   | Optional second word this bot will look for   | -e TRIGGER_2='trigger_word' |
+| RESPONSES_2 | The responses in a `;` seperated list your bot will randomly choose from. | -e RESPONSES_2='Response 1;Response 2;Response 3' |
+| TRIGGER_3   | Optional third trigger word this bot will look for   | -e TRIGGER_3='trigger_word' |
+| RESPONSES_3 | The responses in a `;` seperated list your bot will randomly choose from. | -e RESPONSES_3='Response 1;Response 2;Response 3' |
 | INCLUDE   | Leave blank for your bot to work over all communities. Set to `community@instance.tld` if you want to lock the bot down to a single community. | -e INCLUDE='community@instance.tld' |
 | POLL_AMOUNT   | How many posts the bot will look at for the trigger word. | -e POLL_AMOUNT=25 |
 | POLL_FREQ | How often (in seconds) the bot will scan the newest comments. | -e POLL_FREQ=5 |
-
+| REACH | Either LOCAL or GLOBAL. LOCAL will mean the bot only scans the local instance. GLOBAL scans all instances.    | -e REACH='LOCAL'    |
+| CREATE_REPORT | Creates a report to the mod/admin team based on finding a trigger word. Either TRUE or FALSE. | -e CREATE_REPORT='FALSE'  |
 
 
 ## Install
